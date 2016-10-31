@@ -31,6 +31,8 @@ static  int stopInt = 0;
     secondTableView.delegate = self;
     secondTableView.dataSource = self;
     [self.view addSubview:secondTableView];
+    
+   
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -57,20 +59,41 @@ static  int stopInt = 0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    stopInt = stopInt+1;
     
-    NSLog(@"点了第%d次",stopInt);
     
-    if (stopInt<3) {
+    
+    if (stopInt<5) {
+        stopInt = stopInt+1;
+        NSLog(@"点了第%d次",stopInt);
         ViewController  *about = [[ViewController alloc]init];
         [self.navigationController pushViewController:about animated:YES];
     }else{
+        stopInt = 5;
+        NSLog(@"点了第%d次",stopInt);
         NSLog(@"fuck");
     }
-    
   
 
 }
+
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound){
+        
+        if (stopInt>0) {
+            stopInt = stopInt -1;
+        }
+        
+    }
+    
+    [super viewWillDisappear:animated];
+}
+
+
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
